@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.xabgesagtx</groupId>
-    <artifactId>telegram-spring-boot-starter-example</artifactId>
+    <groupId>com.github.ricardobaumann</groupId>
+    <artifactId>content-bot</artifactId>
     <version>0.12-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>telegram-spring-boot-starter-example</name>
-    <description>Starter pom for the telegram bot project</description>
+    <name>Content Bot</name>
+    <description>Telegram bot for content fetching</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -18,11 +18,6 @@
         <relativePath/>
     </parent>
 
-    <issueManagement>
-        <url>https://github.com/xabgesagtx/telegram-spring-boot-starter-example/issues</url>
-        <system>GitHub Issues</system>
-    </issueManagement>
-
     <licenses>
         <license>
             <name>MIT License</name>
@@ -30,14 +25,6 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-
-    <scm>
-        <url>https://github.com/xabgesagtx/telegram-spring-boot-starter-example</url>
-        <connection>scm:git:git://github.com/xabgesagtx/telegram-spring-boot-starter-example.git</connection>
-        <developerConnection>scm:git:git@github.com:xabgesagtx/telegram-spring-boot-starter-example.git
-        </developerConnection>
-        <tag>HEAD</tag>
-    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
