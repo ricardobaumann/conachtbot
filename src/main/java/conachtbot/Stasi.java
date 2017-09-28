@@ -74,7 +74,7 @@ public class Stasi implements Reply {
     public String description() {
 
         final String response = reportMap.keySet().stream().collect(Collectors.joining("\n"));
-        return "I have some content groups with these funny names:\n" + response + " \nYou can ask me about any of these. Just type : \nI wanna know about 'stuff'";
+        return "I have some content groups with these funny names:\n" + response + " \nYou can ask me about any of these. Just type : I wanna know about '" + reportMap.keySet().iterator().next() + "'";
     }
 
     private String friendlyName(final String reportName) {

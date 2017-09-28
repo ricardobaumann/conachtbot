@@ -6,6 +6,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -18,13 +19,15 @@ public class Replyer {
         this.replies = replies;
     }
 
-    String reply(final String answer) {
+    String reply(final String question) {
 
-        if (answer.toLowerCase().contains("what do you know")) {
-            return replies.stream().sorted(Comparator.comparingInt(Reply::order)).map(Reply::description).collect(Collectors.joining("\n\n and \n\n"));
+        if (question.toLowerCase().contains("what do you know")) {
+            return replies.stream().sorted(Comparator.comparingInt(Reply::order)).map(Reply::description)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.joining("\n\n and \n\n"));
         }
 
-        final String replyMessage = replies.stream().map(reply -> reply.replyTo(answer))
+        final String replyMessage = replies.stream().map(reply -> reply.replyTo(question))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.joining("\n"));

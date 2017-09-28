@@ -1,7 +1,6 @@
 package conachtbot;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -10,20 +9,18 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-/**
- * This example bot is an echo bot that just repeats the messages sent to him
- */
-@Component
-public class ExampleBot extends TelegramLongPollingBot {
+import java.util.Set;
 
+@Component
+public class ExampleBot extends TelegramLongPollingBot implements Loggable {
+
+    private final Set<Long> activeChatIds = Sets.newHashSet();
 
     private final Replyer replyer;
 
     ExampleBot(final Replyer replyer) {
         this.replyer = replyer;
     }
-
-    private static final Logger logger = LoggerFactory.getLogger(ExampleBot.class);
 
     @Value("${bot.token}")
     private String token;
@@ -48,15 +45,25 @@ public class ExampleBot extends TelegramLongPollingBot {
             final SendMessage response = new SendMessage();
             final Long chatId = message.getChatId();
             response.setChatId(chatId);
+            activeChatIds.add(chatId);
             final String text = message.getText();
             response.setText(replyer.reply(text));
             try {
                 sendMessage(response);
-                logger.info("Sent message \"{}\" to {}", text, chatId);
             } catch (final TelegramApiException e) {
-                logger.error("Failed to send message \"{}\" to {} due to error: {}", text, chatId, e.getMessage());
+                logger().error("Failed to send message \"{}\" to {} due to error: {}", text, chatId, e.getMessage());
             }
         }
     }
 
+
+    void broadcast(final String message) {
+        activeChatIds.forEach(chatId -> {
+            try {
+                sendMessage(new SendMessage(chatId, message));
+            } catch (final TelegramApiException e) {
+                logger().error("Unable to send message", e);
+            }
+        });
+    }
 }
