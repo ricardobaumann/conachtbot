@@ -17,7 +17,11 @@ public class Replyer {
         this.replies = replies;
     }
 
-    public String reply(final String answer) {
+    String reply(final String answer) {
+
+        if (answer.toLowerCase().contains("what do you know")) {
+            return replies.stream().map(Reply::description).collect(Collectors.joining("\n and \n"));
+        }
 
         final String replyMessage = replies.stream().map(reply -> reply.replyTo(answer))
                 .filter(Optional::isPresent)

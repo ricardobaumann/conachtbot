@@ -11,12 +11,22 @@ public class BotConfig {
 
     @Bean(name = "frankRestTemplate")
     RestTemplate frankRestTemplate() {
+        return createFrom("biggus", "dickus", "https://frank-ecs-production.up.welt.de");
+    }
+
+    @Bean(name = "stasiRestTemplate")
+    RestTemplate stasiRestTemplate() {
+        return createFrom("biggus", "dickus", "https://stasi-ecs-production.up.welt.de");
+    }
+
+    private RestTemplate createFrom(final String username, final String password, final String baseUrl) {
         final RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor("biggus", "dickus"));
+        restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor(username, password));
         final DefaultUriTemplateHandler uriTemplateHandler = new DefaultUriTemplateHandler();
-        uriTemplateHandler.setBaseUrl("https://frank-ecs-production.up.welt.de");
+        uriTemplateHandler.setBaseUrl(baseUrl);
         restTemplate.setUriTemplateHandler(uriTemplateHandler);
         return restTemplate;
     }
+
 
 }

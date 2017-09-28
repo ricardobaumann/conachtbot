@@ -41,6 +41,11 @@ public class FrankReplyer implements Reply, Loggable {
         return Optional.empty();
     }
 
+    @Override
+    public String description() {
+        return "I can tell you about themes from welt.de, like sport, politik and etc";
+    }
+
     private Set<String> extractUrlsFrom(final String answer) {
         final String sectionPath = "/" + answer.replaceAll("\\s", "/") + "/";
         final ObjectNode response = restTemplate.getForObject("/_search?sectionPath={sectionPath}&type=article&sortBy=lastModifiedDate&pageSize=10", ObjectNode.class, sectionPath);
