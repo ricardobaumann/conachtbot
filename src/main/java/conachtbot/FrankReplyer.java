@@ -31,7 +31,6 @@ public class FrankReplyer implements Reply, Loggable {
             final Matcher matcher = PATTERN.matcher(answer);
             if (matcher.find()) {
                 final String tag = matcher.group(1);
-
                 return Optional.of("I may know something about " + tag + ": \n" + extractUrlsFrom(tag).stream().collect(Collectors.joining("\n")));
             }
         } catch (final Exception e) {
@@ -43,7 +42,7 @@ public class FrankReplyer implements Reply, Loggable {
 
     @Override
     public String description() {
-        return "I can tell you about themes from welt.de, like sport, politik and etc";
+        return "I can tell you about themes from welt.de, like sport, politik and etc: Just type: I wanna know about 'sport'";
     }
 
     private Set<String> extractUrlsFrom(final String answer) {
